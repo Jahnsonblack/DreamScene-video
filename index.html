@@ -10,79 +10,259 @@
     .video-row video { width: 100%; max-width: 230px; height: auto; }
     .prompt { font-weight: bold; margin-top: 40px; font-size: 18px; }
   </style>
+  <style>
+    .prompt {
+      font-weight: bold;
+      font-size: 18px;
+      font-style: italic;
+      text-align: center;
+      margin: 40px 0 20px 0;
+    }
+
+    .video-table {
+      display: grid;
+      grid-template-columns: 60px repeat(5, 1fr); /* 左边60px标签 + 5列方法 */
+      gap: 10px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .method-cell {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .method-cell span {
+      display: block;
+      font-weight: normal;
+      font-size: 13px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .video-tag {
+      font-weight: bold;
+      font-size: 16px;
+      text-align: right;
+      line-height: 1;
+      align-self: center;
+    }
+
+    .video-table video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .scene-title {
+      font-size: 28px;         
+      font-weight: 800;        
+      text-align: center;
+      margin: 50px 0 10px 0;
+    }
+    .intro {
+      max-width: 1000px;
+      margin: 40px auto 30px auto;
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: justify;
+      font-family: Arial, sans-serif;
+      }
+      .intro u {
+        text-decoration: underline;
+        font-weight: 500;
+      }
+      .quality-table {
+      display: grid;
+      grid-template-columns: 60px repeat(2, 1fr);  /* 一列标签，两列视频 */
+      gap: 10px;
+      max-width: 700px;
+      margin: 0 auto 60px auto;
+    }
+    .view-table {
+    display: grid;
+    grid-template-columns: 60px repeat(2, 1fr); /* 标签列 + 2个视角 */
+    gap: 10px;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+  }
+
+
+  </style>
 </head>
 <body>
 
   <h1>Supplementary Results: DreamScene vs Baselines</h1>
-  <p>This page shows the qualitative comparison of DreamScene against four baselines: Text2Room, Text2NeRF, Set-the-Scene, and ProlificDreamer. For each prompt, we show RGB videos followed by the corresponding depth videos.</p>
-
-  <!-- Prompt 1 -->
-  <div class="prompt">Prompt: A DSLR photo of a bedroom room.</div>
-  <div class="video-row">
-    <video autoplay loop muted playsinline src="videos/bedroom/text2room.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/bedroom/text2nerf.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/bedroom/set-the-scene.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/bedroom/prolificdreamer.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/bedroom/dreamscene.mp4"></video>
-  </div>
-  <div class="video-row">
-    <video autoplay loop muted playsinline src="videos/bedroom/text2room_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/bedroom/text2nerf_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/bedroom/set-the-scene_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/bedroom/prolificdreamer_depth.mp4"></video>
-     <video autoplay loop muted playsinline src="videos/bedroom/dreamscene_depth.mp4"></video>
+  <div class="intro">
+  This page shows the qualitative comparison of DreamScene against four baselines: Text2Room, Text2NeRF, ProlificDreamer and  Set-the-Scene. For each prompt, we show RGB videos followed by the corresponding depth videos, generated using the official code provided by each method. 
+  We adopt a unified camera trajectory for all methods to enable a more <strong>fair</strong> and <strong>meaningful</strong> comparison.
+  Specifically, we conduct testing on the same scenes used during training, but replace the original training camera poses
+  with a continuous trajectory that simulates <strong>natural human exploration behavior</strong>: <u>the camera starts from the scene center,
+  first moves along straight paths in multiple directions across the scene, and then performs a circular motion around the center,
+  with the radius of the circular path set to two-thirds of the scene diameter.</u> As shown in the videos, inpainting-based methods (e.g., Text2Room and Text2NeRF) resemble stitched panoramic images rather than true 3D scenes, lacking geometric consistency and often collapsing under novel camera views.
+  ProlificDreamer is designed for object-centric generation and struggles with scene-wide 3D consistency, leading to noticeably degraded rendering quality in complex environments.
+  Set-the-Scene improves structural consistency but remains constrained by the low visual fidelity inherent to SDS-based generation.
+  Crucially, none of these methods support fully automated scene generation or flexible object-level editing.
+  In contrast, DreamScene unifies <strong>automated layout planning, robust 3D structure, high visual quality, and controllable scene editing</strong> into a scalable and practical pipeline.
   </div>
 
-  <!-- Prompt 2 -->
-  <div class="prompt">Prompt: A DSLR photo of a living room.</div>
-  <div class="video-row">
-    <video autoplay loop muted playsinline src="videos/livingroom/text2room.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/livingroom/text2nerf.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/livingroom/set-the-scene.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/livingroom/prolificdreamer.mp4"></video>
-     <video autoplay loop muted playsinline src="videos/livingroom/dreamscene.mp4"></video>
-  </div>
-  <div class="video-row">
-    <video autoplay loop muted playsinline src="videos/livingroom/text2room_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/livingroom/text2nerf_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/livingroom/set-the-scene_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/livingroom/prolificdreamer_depth.mp4"></video>
-     <video autoplay loop muted playsinline src="videos/livingroom/dreamscene_depth.mp4"></video>
-  </div>
 
+
+
+
+<div class="scene-title">Outdoor Scene</div>
+<div class="prompt">Prompt: "There are many astronauts on the moon."</div>
+
+<!-- 方法名 + 时间 -->
+
+<div class="video-table">
+  <!-- 第一行：空 + 方法名 + 时间 -->
+  <div></div>
+  <div class="method-cell">Text2Room<span>13.3h</span></div>
+  <div class="method-cell">Text2NeRF<span>7.5h</span></div>
+  <div class="method-cell">ProlificDreamer<span>12h</span></div>
+  <div class="method-cell">Set-the-Scene<span>1.5h</span></div>
+  <div class="method-cell">DreamScene<span>2h</span></div>
+
+  <!-- 第二行：RGB + 视频 -->
+  <div class="video-tag">RGB</div>
+  <video autoplay loop muted playsinline src="videos/space/text2room.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/space/text2nerf.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/space/prolificdreamer.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/space/set-the-scene.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/space/dreamscene.mp4"></video>
+
+  <!-- 第三行：Depth + 视频 -->
+  <div class="video-tag">Depth</div>
+  <video autoplay loop muted playsinline src="videos/space/text2room_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/space/text2nerf_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/space/prolificdreamer_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/space/set-the-scene_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/space/dreamscene_depth.mp4"></video>
+</div>
+
+
+    <!-- Prompt 2 -->
+<div class="prompt">Prompt: "An autumn park."</div>
+<div class="video-table">
+  <!-- 第一行：空 + 方法名 + 时间 -->
+  <div></div>
+  <div class="method-cell">Text2Room<span>13.3h</span></div>
+  <div class="method-cell">Text2NeRF<span>7.5h</span></div>
+  <div class="method-cell">ProlificDreamer<span>12h</span></div>
+  <div class="method-cell">Set-the-Scene<span>1.5h</span></div>
+  <div class="method-cell">DreamScene<span>2h</span></div>
+
+  <!-- 第二行：RGB + 视频 -->
+  <div class="video-tag">RGB</div>
+  <video autoplay loop muted playsinline src="videos/park/text2room.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/park/text2nerf.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/park/prolificdreamer.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/park/set-the-scene.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/park/dreamscene.mp4"></video>
+
+  <!-- 第三行：Depth + 视频 -->
+  <div class="video-tag">Depth</div>
+  <video autoplay loop muted playsinline src="videos/park/text2room_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/park/text2nerf_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/park/prolificdreamer_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/park/set-the-scene_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/park/dreamscene_depth.mp4"></video>
+</div>
+
+<div class="scene-title">Indoor Scene</div>
   <!-- Prompt 3 -->
-  <div class="prompt">Prompt: On the moon, there are astronauts.</div>
-  <div class="video-row">
-    <video autoplay loop muted playsinline src="videos/space/text2room.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/space/text2nerf.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/space/set-the-scene.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/space/prolificdreamer.mp4"></video>
-     <video autoplay loop muted playsinline src="videos/space/dreamscene.mp4"></video>
-  </div>
-  <div class="video-row">
-    <video autoplay loop muted playsinline src="videos/space/text2room_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/space/text2nerf_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/space/set-the-scene_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/space/prolificdreamer_depth.mp4"></video>
-     <video autoplay loop muted playsinline src="videos/space/dreamscene_depth.mp4"></video>
-  </div>
+<div class="prompt">Prompt: A DSLR photo of a modern living room.</div>
+<div class="video-table">
+  <!-- 第一行：空 + 方法名 + 时间 -->
+  <div></div>
+  <div class="method-cell">Text2Room<span>13.3h</span></div>
+  <div class="method-cell">Text2NeRF<span>7.5h</span></div>
+  <div class="method-cell">ProlificDreamer<span>12h</span></div>
+  <div class="method-cell">Set-the-Scene<span>1.5h</span></div>
+  <div class="method-cell">DreamScene<span>2h</span></div>
+
+  <!-- 第二行：RGB + 视频 -->
+  <div class="video-tag">RGB</div>
+  <video autoplay loop muted playsinline src="videos/livingroom/text2room.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/livingroom/text2nerf.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/livingroom/prolificdreamer.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/livingroom/set-the-scene.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/livingroom/dreamscene.mp4"></video>
+
+  <!-- 第三行：Depth + 视频 -->
+  <div class="video-tag">Depth</div>
+  <video autoplay loop muted playsinline src="videos/livingroom/text2room_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/livingroom/text2nerf_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/livingroom/prolificdreamer_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/livingroom/set-the-scene_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/livingroom/dreamscene_depth.mp4"></video>
+</div>
+
 
   <!-- Prompt 4 -->
-  <div class="prompt">Prompt: An autumn park.</div>
-  <div class="video-row">
-    <video autoplay loop muted playsinline src="videos/park/text2room.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/park/text2nerf.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/park/set-the-scene.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/park/prolificdreamer.mp4"></video>
-     <video autoplay loop muted playsinline src="videos/park/dreamscene.mp4"></video>
-  </div>
-  <div class="video-row">
-    <video autoplay loop muted playsinline src="videos/park/text2room_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/park/text2nerf_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/park/set-the-scene_depth.mp4"></video>
-    <video autoplay loop muted playsinline src="videos/park/prolificdreamer_depth.mp4"></video>
-     <video autoplay loop muted playsinline src="videos/park/dreamscene_depth.mp4"></video>
-  </div>
+  <div class="prompt">Prompt: A DSLR photo of a classical bedroom room.</div>
+<div class="video-table">
+  <!-- 第一行：空 + 方法名 + 时间 -->
+  <div></div>
+  <div class="method-cell">Text2Room<span>13.3h</span></div>
+  <div class="method-cell">Text2NeRF<span>7.5h</span></div>
+  <div class="method-cell">ProlificDreamer<span>12h</span></div>
+  <div class="method-cell">Set-the-Scene<span>1.5h</span></div>
+  <div class="method-cell">DreamScene<span>2h</span></div>
 
+  <!-- 第二行：RGB + 视频 -->
+  <div class="video-tag">RGB</div>
+  <video autoplay loop muted playsinline src="videos/bedroom/text2room.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/bedroom/text2nerf.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/bedroom/prolificdreamer.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/bedroom/set-the-scene.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/bedroom/dreamscene.mp4"></video>
+
+  <!-- 第三行：Depth + 视频 -->
+  <div class="video-tag">Depth</div>
+  <video autoplay loop muted playsinline src="videos/bedroom/text2room_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/bedroom/text2nerf_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/bedroom/prolificdreamer_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/bedroom/set-the-scene_depth.mp4"></video>
+  <video autoplay loop muted playsinline src="videos/bedroom/dreamscene_depth.mp4"></video>
+</div>
+
+
+<div class="scene-title">Quality Improvement</div>
+
+
+<div class="video-table quality-table">
+  <!-- 方法名 + 时间（仅两列） -->
+  <div></div>
+  <div class="method-cell">DreamScene<br><span>ECCV</span></div>
+  <div class="method-cell">DreamScene<br><span>TPAMI</span></div>
+
+  <!-- RGB 视频 -->
+  <div class="video-tag">RGB</div>
+  <video src="videos/old/space_eccv.mp4" autoplay loop muted playsinline></video>
+  <video src="videos/old/space.mp4" autoplay loop muted playsinline></video>
+
+  <!-- Depth 视频 -->
+  <div class="video-tag">Depth</div>
+  <video src="videos/old/space_eccv_depth.mp4" autoplay loop muted playsinline></video>
+  <video src="videos/old/space_depth.mp4" autoplay loop muted playsinline></video>
+</div>
+
+<div class="scene-title">4D Scene Editing</div>
+
+
+<div class="video-table view-table">
+  <!-- 方法名行（View1 和 View2） -->
+  <div></div>
+  <div class="method-cell">View 1</div>
+  <div class="method-cell">View 2</div>
+
+  <!-- RGB 视频 -->
+  <div class="video-tag">RGB</div>
+  <video src="videos/4D_editing/outdoor_move_1.mp4" autoplay loop muted playsinline></video>
+  <video src="videos/4D_editing/outdoor_move_2.mp4" autoplay loop muted playsinline></video>
+
+</div>
 </body>
 </html>
