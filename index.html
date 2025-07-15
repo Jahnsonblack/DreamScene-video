@@ -97,9 +97,9 @@
   This page shows the qualitative comparison of DreamScene against four baselines: Text2Room, Text2NeRF, ProlificDreamer and  Set-the-Scene. For each prompt, we show RGB videos followed by the corresponding depth videos, generated using the official code provided by each method. 
   We adopt a unified camera trajectory for all methods to enable a more <strong>fair</strong> and <strong>meaningful</strong> comparison.
   Specifically, we conduct testing on the same scenes used during training, but replace the original training camera poses
-  with a continuous trajectory that simulates <strong>natural human exploration behavior</strong>: <u>the camera starts from the scene center,
+  with a continuous trajectory that simulates <strong>natural human exploration behavior</strong>: <u><span style="color: #cc0000;">the camera starts from the scene center,
   first moves along straight paths in multiple directions across the scene, and then performs a circular motion around the center,
-  with the radius of the circular path set to two-thirds of the scene diameter.</u> As shown in the videos, inpainting-based methods (e.g., Text2Room and Text2NeRF) resemble stitched panoramic images rather than true 3D scenes, lacking geometric consistency and often collapsing under novel camera views.
+  with the radius of the circular path set to two-thirds of the scene diameter.</span></u> As shown in the videos, inpainting-based methods (e.g., Text2Room and Text2NeRF) resemble stitched panoramic images rather than true 3D scenes, lacking geometric consistency and often collapsing under novel camera views.
   ProlificDreamer is designed for object-centric generation and struggles with scene-wide 3D consistency, leading to noticeably degraded rendering quality in complex environments.
   Set-the-Scene improves structural consistency but remains constrained by the low visual fidelity inherent to SDS-based generation.
   Crucially, none of these methods support fully automated scene generation or flexible object-level editing.
