@@ -86,7 +86,36 @@
     max-width: 700px;
     margin: 0 auto 60px auto;
   }
+    .video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 230px;
+  }
 
+  .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    border: 4px solid #ccc;
+    border-top: 4px solid #007acc;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    z-index: 1;
+  }
+
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 
   </style>
 </head>
@@ -114,7 +143,7 @@
 
 <details>
    <summary class="summary-toggle">
-     <span class="summary-text">"Prompt: "There are many astronauts on the moon."" - <em>Click to show videos</em></span>
+     <span class="summary-text">"Prompt: "There are many astronauts on the moon." - <em>Click to show videos</em></span>
   </summary> 
 
 
@@ -131,11 +160,27 @@
 
   <!-- 第二行：RGB + 视频 -->
   <div class="video-tag">RGB</div>
-  <video autoplay loop muted playsinline src="videos/space/text2room.mp4"></video>
-  <video autoplay loop muted playsinline src="videos/space/text2nerf.mp4"></video>
-  <video autoplay loop muted playsinline src="videos/space/prolificdreamer.mp4"></video>
-  <video autoplay loop muted playsinline src="videos/space/set-the-scene.mp4"></video>
-  <video autoplay loop muted playsinline src="videos/space/dreamscene.mp4"></video>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/text2room.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/text2nerf.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/prolificdreamer.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/set-the-scene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/dreamscene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+
 
   <!-- 第三行：Depth + 视频 -->
   <div class="video-tag">Depth</div>
@@ -151,7 +196,7 @@
 
 <details>
    <summary class="summary-toggle">
-      <span class="summary-text">Prompt: "An autumn park." - <em>Click to show videos</em></span>
+      <span class="summary-text">"Prompt: "An autumn park." - <em>Click to show videos</em></span>
   </summary>
 <div class="video-table">
   <!-- 第一行：空 + 方法名 + 时间 -->
@@ -185,7 +230,7 @@
   <!-- Prompt 3 -->
 <details>
   <summary class="summary-toggle">
-<span class="summary-text">Prompt: A DSLR photo of a modern living room. - <em>Click to show videos</em></span>
+<span class="summary-text">"Prompt: A DSLR photo of a modern living room."" - <em>Click to show videos</em></span>
   </summary>
 <div class="video-table">
   <!-- 第一行：空 + 方法名 + 时间 -->
@@ -218,7 +263,7 @@
 <details>
   <summary class="summary-toggle">
   <!-- Prompt 4 -->
-  <span class="summary-text">Prompt: A DSLR photo of a classical bedroom room. - <em>Click to show videos</em></span>
+  <span class="summary-text">"Prompt: A DSLR photo of a classical bedroom room." - <em>Click to show videos</em></span>
   </summary>
 <div class="video-table">
   <!-- 第一行：空 + 方法名 + 时间 -->
@@ -293,5 +338,31 @@
 </details>
 
 </div>
+
+<script>
+  const lazyVideos = document.querySelectorAll('.video-wrapper video');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const video = entry.target;
+        const wrapper = video.parentElement;
+        const spinner = wrapper.querySelector('.loading-spinner');
+
+        video.src = video.dataset.src;
+        video.load();
+
+        video.oncanplaythrough = () => {
+          if (spinner) spinner.style.display = 'none';
+          video.play();
+        };
+
+        observer.unobserve(video);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  lazyVideos.forEach(video => observer.observe(video));
+</script>
+
 </body>
 </html>
